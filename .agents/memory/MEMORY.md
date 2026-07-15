@@ -1,0 +1,2 @@
+- [Orval zod email codegen break](orval-zod-email.md) — avoid `format: email` in OpenAPI string schemas; breaks typecheck on this project's pinned zod version.
+- [Frontend asset import convention](frontend-asset-imports.md) — images must be imported via `@assets/...`, not referenced as raw URL strings.

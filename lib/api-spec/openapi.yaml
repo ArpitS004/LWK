@@ -10,6 +10,18 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: products
+    description: Product catalog operations
+  - name: collections
+    description: Collection operations
+  - name: reviews
+    description: Product review operations
+  - name: orders
+    description: Order placement operations
+  - name: newsletter
+    description: Newsletter signup
+  - name: contact
+    description: Contact form submissions
 paths:
   /healthz:
     get:
@@ -24,6 +36,233 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List products with optional filters
+      parameters:
+        - name: category
+          in: query
+          schema: { type: string }
+        - name: collectionSlug
+          in: query
+          schema: { type: string }
+        - name: size
+          in: query
+          schema: { type: string }
+        - name: color
+          in: query
+          schema: { type: string }
+        - name: minPrice
+          in: query
+          schema: { type: number }
+        - name: maxPrice
+          in: query
+          schema: { type: number }
+        - name: sort
+          in: query
+          description: "One of: newest, price-asc, price-desc, trending"
+          schema: { type: string }
+        - name: q
+          in: query
+          description: Free-text search query
+          schema: { type: string }
+        - name: isNew
+          in: query
+          schema: { type: boolean }
+        - name: isLimited
+          in: query
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+
+  /products/{slug}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      summary: Get a single product by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Not found
+
+  /products/{slug}/related:
+    get:
+      operationId: getRelatedProducts
+      tags: [products]
+      summary: Get products related to a given product
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Related products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+
+  /products/{slug}/reviews:
+    get:
+      operationId: listProductReviews
+      tags: [reviews]
+      summary: List reviews for a product
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Review" }
+
+  /collections:
+    get:
+      operationId: listCollections
+      tags: [collections]
+      summary: List all collections
+      parameters:
+        - name: isFeatured
+          in: query
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: Collections
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Collection" }
+
+  /collections/{slug}:
+    get:
+      operationId: getCollection
+      tags: [collections]
+      summary: Get a single collection by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Collection
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Collection"
+        "404":
+          description: Not found
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Place an order (checkout)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Invalid order payload
+
+  /orders/{orderNumber}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      summary: Look up an order by order number
+      parameters:
+        - name: orderNumber
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Not found
+
+  /newsletter:
+    post:
+      operationId: subscribeNewsletter
+      tags: [newsletter]
+      summary: Subscribe an email to the newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewsletterInput"
+      responses:
+        "201":
+          description: Subscribed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsletterSubscription"
+        "400":
+          description: Invalid email
+
+  /contact:
+    post:
+      operationId: submitContactMessage
+      tags: [contact]
+      summary: Submit a contact form message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Message received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactMessage"
+        "400":
+          description: Invalid payload
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +273,234 @@ components:
       required:
         - status
 
+    Product:
+      type: object
+      required:
+        - id
+        - slug
+        - name
+        - category
+        - price
+        - description
+        - images
+        - colors
+        - sizes
+        - sku
+        - inStock
+        - isNew
+        - isLimited
+        - stockCount
+        - fabric
+        - careInstructions
+        - collectionSlug
+        - compareAtPrice
+        - createdAt
+      properties:
+        id: { type: integer }
+        slug: { type: string }
+        name: { type: string }
+        category:
+          type: string
+          description: "One of: tees, hoodies, cargo-pants, jackets, accessories, footwear"
+        price: { type: number }
+        compareAtPrice: { type: ["number", "null"] }
+        description: { type: string }
+        images:
+          type: array
+          items: { type: string }
+        colors:
+          type: array
+          items: { type: string }
+        sizes:
+          type: array
+          items: { type: string }
+        sku: { type: string }
+        inStock: { type: boolean }
+        isNew: { type: boolean }
+        isLimited: { type: boolean }
+        stockCount: { type: ["integer", "null"] }
+        fabric: { type: ["string", "null"] }
+        careInstructions: { type: ["string", "null"] }
+        collectionSlug: { type: ["string", "null"] }
+        createdAt: { type: string, format: date-time }
+
+    Collection:
+      type: object
+      required:
+        - id
+        - slug
+        - name
+        - description
+        - heroImage
+        - isFeatured
+        - dropAt
+        - createdAt
+      properties:
+        id: { type: integer }
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        heroImage: { type: string }
+        isFeatured: { type: boolean }
+        dropAt: { type: ["string", "null"], format: date-time }
+        createdAt: { type: string, format: date-time }
+
+    Review:
+      type: object
+      required:
+        - id
+        - productSlug
+        - authorName
+        - rating
+        - title
+        - body
+        - createdAt
+      properties:
+        id: { type: integer }
+        productSlug: { type: string }
+        authorName: { type: string }
+        rating: { type: integer, minimum: 1, maximum: 5 }
+        title: { type: string }
+        body: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    OrderLineItem:
+      type: object
+      required:
+        - productId
+        - name
+        - price
+        - size
+        - color
+        - quantity
+        - image
+      properties:
+        productId: { type: integer }
+        name: { type: string }
+        price: { type: number }
+        size: { type: string }
+        color: { type: string }
+        quantity: { type: integer, minimum: 1 }
+        image: { type: string }
+
+    ShippingAddress:
+      type: object
+      required:
+        - fullName
+        - line1
+        - line2
+        - city
+        - state
+        - postalCode
+        - country
+      properties:
+        fullName: { type: string }
+        line1: { type: string }
+        line2: { type: ["string", "null"] }
+        city: { type: string }
+        state: { type: string }
+        postalCode: { type: string }
+        country: { type: string }
+
+    OrderInput:
+      type: object
+      required:
+        - email
+        - items
+        - shippingAddress
+        - subtotal
+        - shipping
+        - tax
+        - total
+        - giftNote
+      properties:
+        email: { type: string }
+        items:
+          type: array
+          minItems: 1
+          items: { $ref: "#/components/schemas/OrderLineItem" }
+        shippingAddress: { $ref: "#/components/schemas/ShippingAddress" }
+        subtotal: { type: number }
+        shipping: { type: number }
+        tax: { type: number }
+        total: { type: number }
+        giftNote: { type: ["string", "null"] }
+
+    Order:
+      type: object
+      required:
+        - id
+        - orderNumber
+        - email
+        - items
+        - shippingAddress
+        - subtotal
+        - shipping
+        - tax
+        - total
+        - giftNote
+        - status
+        - createdAt
+      properties:
+        id: { type: integer }
+        orderNumber: { type: string }
+        email: { type: string }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/OrderLineItem" }
+        shippingAddress: { $ref: "#/components/schemas/ShippingAddress" }
+        subtotal: { type: number }
+        shipping: { type: number }
+        tax: { type: number }
+        total: { type: number }
+        giftNote: { type: ["string", "null"] }
+        status: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    NewsletterInput:
+      type: object
+      required:
+        - email
+      properties:
+        email: { type: string }
+
+    NewsletterSubscription:
+      type: object
+      required:
+        - id
+        - email
+        - createdAt
+      properties:
+        id: { type: integer }
+        email: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    ContactInput:
+      type: object
+      required:
+        - name
+        - email
+        - subject
+        - message
+      properties:
+        name: { type: string }
+        email: { type: string }
+        subject: { type: string }
+        message: { type: string }
+
+    ContactMessage:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - subject
+        - message
+        - createdAt
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        email: { type: string }
+        subject: { type: string }
+        message: { type: string }
+        createdAt: { type: string, format: date-time }

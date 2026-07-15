@@ -48,7 +48,7 @@ function App() {
       <WishlistProvider>
         <CartProvider>
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <div className="dark text-foreground bg-background noise" />
+            <div className="text-foreground bg-background noise" />
             <Router />
           </WouterRouter>
         </CartProvider>

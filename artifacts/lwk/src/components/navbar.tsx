@@ -72,8 +72,12 @@ export function Navbar() {
         </div>
 
         <div className="flex-1 flex justify-center">
-          <Link href="/" className="text-2xl font-extrabold tracking-tight uppercase">
-            LWK<span className="text-accent">*</span>
+          <Link href="/" className="flex items-center">
+            <img
+              src="/lwk-logo.png"
+              alt="LWK"
+              className="h-10 w-auto object-contain"
+            />
           </Link>
         </div>
 

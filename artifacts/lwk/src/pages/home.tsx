@@ -17,32 +17,37 @@ export default function Home() {
     <Layout>
       {/* Hero */}
       <section className="relative h-screen min-h-[640px] flex items-end pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-background">
-          <img
-            src={heroImg}
-            alt="LWK Hero"
-            className="w-full h-full object-cover opacity-50"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <div className="absolute inset-0 bg-black">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-70"
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+            <img src={heroImg} alt="LWK Hero" className="w-full h-full object-cover opacity-50" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
         </div>
         <div className="container relative mx-auto px-6 z-10">
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground mb-4">Est. 2024 — India</p>
-          <h1 className="text-6xl md:text-9xl font-extrabold tracking-tight uppercase mb-6 leading-[0.88]">
+          <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/50 mb-4">Est. 2026 — India</p>
+          <h1 className="text-6xl md:text-9xl font-extrabold tracking-tight uppercase mb-6 leading-[0.88] text-white">
             LOWKEY.<br/>ALWAYS.
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-md mb-10 tracking-wide">
+          <p className="text-base md:text-lg text-white/60 max-w-md mb-10 tracking-wide">
             Premium streetwear. 240 GSM. Built in India.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
               href="/shop"
-              className="bg-foreground text-background px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-accent hover:text-white transition-colors"
+              className="bg-white text-black px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-accent hover:text-white transition-colors"
             >
               Shop Now
             </Link>
             <Link
               href="/collections/lowkey-always"
-              className="px-8 py-4 uppercase tracking-widest text-sm border border-border hover:border-foreground transition-colors"
+              className="px-8 py-4 uppercase tracking-widest text-sm text-white border border-white/30 hover:border-white transition-colors"
             >
               Drop 001 →
             </Link>

@@ -42,7 +42,7 @@ export function Footer() {
       <div className="container mx-auto px-6 pt-16 pb-10 grid grid-cols-1 md:grid-cols-12 gap-12 mb-8">
         {/* Brand + newsletter */}
         <div className="md:col-span-4 space-y-6">
-          <h2 className="text-xl font-extrabold tracking-tight uppercase">LWK<span className="text-accent">*</span></h2>
+          <img src="/lwk-logo.png" alt="LWK" className="h-8 w-auto object-contain" />
           <p className="text-muted-foreground text-xs leading-relaxed uppercase tracking-widest max-w-xs">
             Lowkey. Always.<br/>
             Stay Lowkey. Stay Original.

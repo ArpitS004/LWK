@@ -3,6 +3,7 @@ import { useWishlist } from "@/lib/wishlist"
 import { useGetProduct } from "@workspace/api-client-react"
 import { Link } from "wouter"
 import { Trash2 } from "lucide-react"
+import { formatPrice } from "@/lib/format"
 
 // Component to fetch and display a single wishlist item to avoid passing hooks in loops incorrectly
 function WishlistItemCard({ slug, onRemove }: { slug: string, onRemove: () => void }) {
@@ -27,8 +28,8 @@ function WishlistItemCard({ slug, onRemove }: { slug: string, onRemove: () => vo
           <h3 className="text-sm uppercase tracking-wide group-hover:text-muted-foreground transition-colors mb-1">
             {product.name}
           </h3>
-          <span className="text-sm font-mono whitespace-nowrap">
-            ${product.price.toFixed(2)}
+          <span className="text-sm font-medium whitespace-nowrap">
+            {formatPrice(product.price)}
           </span>
         </div>
       </Link>

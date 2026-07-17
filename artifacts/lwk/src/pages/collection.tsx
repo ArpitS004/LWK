@@ -3,6 +3,7 @@ import { useGetCollection, useListProducts } from "@workspace/api-client-react"
 import { Link, useRoute } from "wouter"
 import NotFound from "./not-found"
 import journal1Img from "@assets/generated_images/journal-1.jpg"
+import { formatPrice } from "@/lib/format"
 
 export default function Collection() {
   const [, params] = useRoute("/collections/:slug")
@@ -87,8 +88,8 @@ export default function Collection() {
                       {product.name}
                     </h3>
                   </div>
-                  <span className="text-sm font-mono whitespace-nowrap">
-                    ${product.price.toFixed(2)}
+                  <span className="text-sm font-medium whitespace-nowrap">
+                    {formatPrice(product.price)}
                   </span>
                 </div>
               </Link>

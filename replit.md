@@ -1,6 +1,6 @@
-# LWK (Lowkey Always)
+# LWK* (LOWKEY ALWAYS)
 
-A dark, minimal luxury streetwear e-commerce storefront — home, shop with filters/search, collections, product detail, cart/wishlist, guest checkout, order confirmation, journal/lookbook, and policy pages.
+A real Indian streetwear brand storefront — white/black/blood-red brand system, INR pricing, General Sans + Inter typography, 12 real products across 3 drops (Drop 001 Lowkey. Always. / Drop 002 Off The Radar / Drop 003 Unseen), categories: T-Shirts / Hoodies / Bottoms / Accessories. Pages: home, shop (filter/search), collections, product detail (variants, cart, wishlist), guest checkout with GST + free-shipping logic, order confirmation, lookbook, about, 404.
 
 ## Run & Operate
 
@@ -38,9 +38,14 @@ A dark, minimal luxury streetwear e-commerce storefront — home, shop with filt
 
 ## Product
 
-- Customer-facing storefront only: home, shop (filter/search), collection pages, product detail (variants, reviews, related items), cart, guest checkout, order confirmation, wishlist, about, journal, contact, FAQ, shipping/returns, privacy, terms, 404.
-- No account/login/signup and no admin/CMS panel yet — planned as a follow-up phase.
-- Checkout does not process real payments yet — orders are created and stored for real, but payment collection is a placeholder step pending a future integration decision (e.g. Stripe).
+- Real brand: LWK* (LOWKEY ALWAYS), est. 2024, India. Blood red #6A1F24 accent, bone off-white, black #111111.
+- Currency: INR (₹) — prices stored as plain rupee numbers in the DB. `formatPrice()` helper in `src/lib/format.ts` formats with `₹` and `en-IN` locale grouping.
+- Catalog: 3 collections (lowkey-always, off-the-radar, unseen) and 12 products across tees / hoodies / bottoms / accessories.
+- Checkout: free shipping when subtotal ≥ ₹1999, else ₹99 flat; 18% GST applied. No real payment processor yet — orders persist for real.
+- Typography: General Sans (via Fontshare) for headings, Inter (Google Fonts) for body — free substitutes for the brand spec's Neue Montreal Bold + General Sans + Inter.
+- Nav: Home / Shop / Collections / About / Lookbook. Top announcement bar with free-shipping promo. Logo: LWK* (asterisk in accent color).
+- Route `/lookbook` maps to the journal component (renamed from `/journal`).
+- No account/login/signup and no admin/CMS panel yet — planned follow-up.
 
 ## User preferences
 

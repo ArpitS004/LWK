@@ -1,8 +1,9 @@
 import { Layout } from "@/components/layout"
 import { useListProducts, useListCollections } from "@workspace/api-client-react"
 import { Link, useLocation } from "wouter"
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { formatPrice } from "@/lib/format"
 
 export default function Shop() {
   const [location] = useLocation()
@@ -19,17 +20,23 @@ export default function Shop() {
   })
   const { data: collections } = useListCollections()
 
-  const categories = ["tees", "hoodies", "cargo-pants", "jackets", "accessories", "footwear"]
+  const categories = [
+    { value: "tees", label: "T-Shirts" },
+    { value: "hoodies", label: "Hoodies" },
+    { value: "bottoms", label: "Bottoms" },
+    { value: "accessories", label: "Accessories" },
+  ]
 
   return (
     <Layout>
       <div className="container mx-auto px-6 py-12 md:py-24">
         <header className="mb-16 md:mb-24">
-          <h1 className="text-5xl md:text-7xl font-medium tracking-tighter uppercase mb-6">
-            Collection
+          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">All Drops</p>
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight uppercase mb-6">
+            Shop
           </h1>
-          <p className="text-muted-foreground max-w-xl text-lg font-light">
-            Engineered garments. Architectural silhouettes. No compromises.
+          <p className="text-muted-foreground max-w-xl text-base">
+            240 GSM. 100% cotton. Made in India. Lowkey, always.
           </p>
         </header>
 
@@ -51,15 +58,15 @@ export default function Shop() {
                   </button>
                 </li>
                 {categories.map((c) => (
-                  <li key={c}>
-                    <button 
-                      onClick={() => setCategory(c)}
+                  <li key={c.value}>
+                    <button
+                      onClick={() => setCategory(c.value)}
                       className={cn(
                         "text-sm uppercase tracking-widest hover:text-primary transition-colors text-left",
-                        category === c ? "text-primary" : "text-muted-foreground"
+                        category === c.value ? "text-primary" : "text-muted-foreground"
                       )}
                     >
-                      {c.replace('-', ' ')}
+                      {c.label}
                     </button>
                   </li>
                 ))}
@@ -162,8 +169,8 @@ export default function Shop() {
                           {product.colors.length} Color{product.colors.length !== 1 ? 's' : ''}
                         </p>
                       </div>
-                      <span className="text-sm font-mono whitespace-nowrap">
-                        ${product.price.toFixed(2)}
+                      <span className="text-sm font-medium whitespace-nowrap">
+                        {formatPrice(product.price)}
                       </span>
                     </div>
                   </Link>

@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -56,40 +57,43 @@
   --elevate-1: rgba(0, 0, 0, 0.04);
   --elevate-2: rgba(0, 0, 0, 0.09);
 
-  /* Light / white theme for LWK */
+  /* LWK brand system: black / bone / blood red */
   --background: 0 0% 100%;
-  --foreground: 0 0% 4%;
+  --foreground: 0 0% 7%;
   --border: 0 0% 88%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 4%;
+  --card-foreground: 0 0% 7%;
   --card-border: 0 0% 88%;
-  --sidebar: 0 0% 98%;
-  --sidebar-foreground: 0 0% 4%;
+  --sidebar: 40 20% 97%;
+  --sidebar-foreground: 0 0% 7%;
   --sidebar-border: 0 0% 88%;
-  --sidebar-primary: 0 0% 4%;
+  --sidebar-primary: 0 0% 7%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 92%;
-  --sidebar-accent-foreground: 0 0% 4%;
+  --sidebar-accent-foreground: 0 0% 7%;
   --sidebar-ring: 0 0% 70%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 4%;
+  --popover-foreground: 0 0% 7%;
   --popover-border: 0 0% 88%;
-  --primary: 0 0% 4%;
+  --primary: 0 0% 7%;
   --primary-foreground: 0 0% 100%;
   --secondary: 0 0% 92%;
-  --secondary-foreground: 0 0% 4%;
-  --muted: 0 0% 94%;
+  --secondary-foreground: 0 0% 7%;
+  --muted: 40 20% 96%;
   --muted-foreground: 0 0% 38%;
-  --accent: 0 0% 90%;
-  --accent-foreground: 0 0% 4%;
-  --destructive: 0 75% 45%;
+  --accent: 355 51% 27%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 355 51% 34%;
   --destructive-foreground: 0 0% 100%;
   --input: 0 0% 88%;
   --ring: 0 0% 60%;
 
-  --app-font-sans: 'Outfit', sans-serif;
-  --app-font-mono: 'Space Mono', monospace;
-  --radius: 0rem; /* Sharp edges for high fashion */
+  /* LWK brand-specific tokens */
+  --brand-red: 355 51% 27%;
+
+  --app-font-sans: 'General Sans', sans-serif;
+  --app-font-mono: 'Inter', sans-serif;
+  --radius: 0rem; /* Sharp edges for streetwear graphics */
 }
 
 .dark {
@@ -116,7 +120,7 @@
   --secondary-foreground: 0 0% 90%;
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 60%;
-  --accent: 0 0% 15%;
+  --accent: 355 51% 40%;
   --accent-foreground: 0 0% 95%;
   --destructive: 0 80% 50%;
   --destructive-foreground: 0 0% 95%;

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import NotFound from "./not-found"
 import { Heart, ChevronRight, Minus, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { formatPrice } from "@/lib/format"
 
 export default function Product() {
   const [, params] = useRoute("/products/:slug")
@@ -101,7 +102,7 @@ export default function Product() {
                   </Link>
                 </div>
                 <h1 className="text-4xl md:text-5xl uppercase tracking-tighter mb-4">{product.name}</h1>
-                <p className="text-2xl font-mono">${product.price.toFixed(2)}</p>
+                <p className="text-2xl font-medium">{formatPrice(product.price)}</p>
               </div>
 
               <div className="space-y-8 mb-12">
@@ -176,8 +177,8 @@ export default function Product() {
                   </Button>
                 </div>
                 
-                <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest text-center mt-4">
-                  Complimentary shipping on orders over $250.
+                <p className="text-xs text-muted-foreground uppercase tracking-widest text-center mt-4">
+                  Free shipping on prepaid orders above ₹1999.
                 </p>
               </div>
             </div>
@@ -235,7 +236,7 @@ export default function Product() {
                     <h3 className="text-xs uppercase tracking-wide group-hover:text-muted-foreground transition-colors mb-1">
                       {item.name}
                     </h3>
-                    <span className="text-xs font-mono">${item.price.toFixed(2)}</span>
+                    <span className="text-xs font-medium">{formatPrice(item.price)}</span>
                   </Link>
                 ))}
               </div>

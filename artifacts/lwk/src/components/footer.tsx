@@ -1,7 +1,6 @@
 import { Link } from "wouter"
 import { useSubscribeNewsletter } from "@workspace/api-client-react"
 import { useState } from "react"
-import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { ArrowRight } from "lucide-react"
 
@@ -22,75 +21,101 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-card border-t border-border pt-20 pb-10">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-        <div className="md:col-span-5 space-y-6">
-          <h2 className="text-xl tracking-widest uppercase">LWK</h2>
-          <p className="text-muted-foreground max-w-sm text-sm">
-            Silence speaks. Luxury without noise. <br/>
-            Exclusive techwear-adjacent streetwear. Designed in the shadows.
+    <footer className="bg-background border-t border-border">
+      {/* Feature strip */}
+      <div className="border-b border-border">
+        <div className="container mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[
+            { icon: "⚖️", label: "240 GSM Heavyweight" },
+            { icon: "🌿", label: "100% Cotton Bio Washed" },
+            { icon: "🇮🇳", label: "Made In India Premium Quality" },
+            { icon: "🚀", label: "Pan India Shipping — Fast & Reliable" },
+          ].map((f) => (
+            <div key={f.label} className="flex flex-col items-center gap-2">
+              <span className="text-2xl">{f.icon}</span>
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground leading-tight">{f.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 pt-16 pb-10 grid grid-cols-1 md:grid-cols-12 gap-12 mb-8">
+        {/* Brand + newsletter */}
+        <div className="md:col-span-4 space-y-6">
+          <h2 className="text-xl font-extrabold tracking-tight uppercase">LWK<span className="text-accent">*</span></h2>
+          <p className="text-muted-foreground text-xs leading-relaxed uppercase tracking-widest max-w-xs">
+            Lowkey. Always.<br/>
+            Stay Lowkey. Stay Original.
           </p>
-          <form onSubmit={handleSubscribe} className="flex max-w-sm pt-4">
+          <div className="pt-4">
+            <p className="text-xs uppercase tracking-widest font-medium mb-4">Stay In The Loop</p>
             {subscribed ? (
-              <p className="text-sm font-mono text-muted-foreground border-b border-border py-2">Subscribed to the inner circle.</p>
+              <p className="text-xs font-mono text-muted-foreground border-b border-border py-2 uppercase tracking-widest">You're in. Stay lowkey.</p>
             ) : (
-              <div className="relative w-full">
-                <Input 
-                  type="email" 
-                  placeholder="EMAIL ADDRESS" 
+              <form onSubmit={handleSubscribe} className="relative max-w-xs">
+                <Input
+                  type="email"
+                  placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pr-12 text-xs uppercase tracking-widest border-b border-border bg-transparent focus-visible:border-primary" 
+                  className="pr-12 text-xs uppercase tracking-widest border-0 border-b border-border bg-transparent rounded-none focus-visible:ring-0 focus-visible:border-primary"
                 />
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={subscribe.isPending}
-                  className="absolute right-0 top-0 bottom-0 px-3 hover:text-primary transition-colors text-muted-foreground"
+                  className="absolute right-0 top-0 bottom-0 px-3 hover:text-accent transition-colors text-muted-foreground"
                 >
                   <ArrowRight className="h-4 w-4" />
                 </button>
-              </div>
+              </form>
             )}
-          </form>
+          </div>
         </div>
 
+        {/* Shop */}
         <div className="md:col-span-2 space-y-4">
-          <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">Shop</h3>
+          <h3 className="text-[10px] font-medium text-foreground uppercase tracking-widest mb-5">Shop</h3>
           <ul className="space-y-3">
-            <li><Link href="/shop" className="text-sm hover:text-primary transition-colors">All Products</Link></li>
-            <li><Link href="/shop?category=tees" className="text-sm hover:text-primary transition-colors">Tees</Link></li>
-            <li><Link href="/shop?category=hoodies" className="text-sm hover:text-primary transition-colors">Hoodies</Link></li>
-            <li><Link href="/shop?category=cargo-pants" className="text-sm hover:text-primary transition-colors">Bottoms</Link></li>
+            <li><Link href="/shop" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">All Products</Link></li>
+            <li><Link href="/shop?category=tees" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">T-Shirts</Link></li>
+            <li><Link href="/shop?category=hoodies" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Hoodies</Link></li>
+            <li><Link href="/shop?category=bottoms" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Bottoms</Link></li>
+            <li><Link href="/shop?category=accessories" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Accessories</Link></li>
           </ul>
         </div>
 
-        <div className="md:col-span-2 space-y-4">
-          <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">Atelier</h3>
-          <ul className="space-y-3">
-            <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About LWK</Link></li>
-            <li><Link href="/journal" className="text-sm hover:text-primary transition-colors">Journal</Link></li>
-            <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
-          </ul>
-        </div>
-
+        {/* Company */}
         <div className="md:col-span-3 space-y-4">
-          <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">Policies</h3>
+          <h3 className="text-[10px] font-medium text-foreground uppercase tracking-widest mb-5">Company</h3>
           <ul className="space-y-3">
-            <li><Link href="/faq" className="text-sm hover:text-primary transition-colors">FAQ</Link></li>
-            <li><Link href="/shipping-returns" className="text-sm hover:text-primary transition-colors">Shipping & Returns</Link></li>
-            <li><Link href="/terms" className="text-sm hover:text-primary transition-colors">Terms of Service</Link></li>
-            <li><Link href="/privacy" className="text-sm hover:text-primary transition-colors">Privacy Policy</Link></li>
+            <li><Link href="/about" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">About Us</Link></li>
+            <li><Link href="/lookbook" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Lookbook</Link></li>
+            <li><Link href="/about" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Our Standards</Link></li>
+            <li><Link href="/shop" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Size Guide</Link></li>
+            <li><Link href="/about" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Contact</Link></li>
+          </ul>
+        </div>
+
+        {/* Help */}
+        <div className="md:col-span-3 space-y-4">
+          <h3 className="text-[10px] font-medium text-foreground uppercase tracking-widest mb-5">Help</h3>
+          <ul className="space-y-3">
+            <li><Link href="/shipping" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Shipping & Delivery</Link></li>
+            <li><Link href="/returns" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Returns & Exchanges</Link></li>
+            <li><Link href="/faq" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">FAQs</Link></li>
+            <li><Link href="/track" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Track Order</Link></li>
+            <li><Link href="/privacy" className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wide">Privacy Policy</Link></li>
           </ul>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 border-t border-border pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono">
-          © {new Date().getFullYear()} LOWKEY ALWAYS. ALL RIGHTS RESERVED.
+      <div className="container mx-auto px-6 border-t border-border pt-8 pb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+          © 2024 LWK. All rights reserved.
         </p>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-xs text-muted-foreground hover:text-primary uppercase tracking-widest">Instagram</a>
-          <a href="#" className="text-xs text-muted-foreground hover:text-primary uppercase tracking-widest">Twitter</a>
+        <div className="flex items-center gap-8">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[10px] text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">Instagram</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-[10px] text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">Twitter</a>
         </div>
       </div>
     </footer>

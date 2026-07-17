@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout"
 import { useGetOrder } from "@workspace/api-client-react"
 import { useRoute, Link } from "wouter"
 import { Check } from "lucide-react"
+import { formatPrice } from "@/lib/format"
 
 export default function OrderConfirmation() {
   const [, params] = useRoute("/order-confirmation/:orderNumber")
@@ -26,7 +27,7 @@ export default function OrderConfirmation() {
             </div>
             <h1 className="text-3xl md:text-5xl uppercase tracking-tighter mb-4">Order Received</h1>
             <p className="text-muted-foreground uppercase tracking-widest text-sm mb-12">
-              Thank you. Your acquisition has been confirmed.
+              Thank you. Stay lowkey. Your order is confirmed.
             </p>
 
             <div className="bg-card border border-border p-8 text-left mb-12">
@@ -45,7 +46,7 @@ export default function OrderConfirmation() {
                 </div>
                 <div>
                   <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Total</h3>
-                  <p className="font-mono">${order.total.toFixed(2)}</p>
+                  <p className="font-medium">{formatPrice(order.total)}</p>
                 </div>
               </div>
 
@@ -58,7 +59,7 @@ export default function OrderConfirmation() {
                       <p className="text-sm uppercase tracking-widest">{item.name}</p>
                       <p className="text-xs text-muted-foreground uppercase">{item.color} / {item.size} × {item.quantity}</p>
                     </div>
-                    <p className="font-mono text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium text-sm">{formatPrice(item.price * item.quantity)}</p>
                   </div>
                 ))}
               </div>

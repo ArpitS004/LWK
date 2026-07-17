@@ -6,6 +6,7 @@ import { useCreateOrder } from "@workspace/api-client-react"
 import { useState, useRef } from "react"
 import { useLocation, Link } from "wouter"
 import { Loader2 } from "lucide-react"
+import { formatPrice } from "@/lib/format"
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart()
@@ -23,13 +24,13 @@ export default function Checkout() {
     city: "",
     state: "",
     postalCode: "",
-    country: "US",
+    country: "India",
     giftNote: ""
   })
 
-  // Fixed values for demo
-  const shipping = 15.00
-  const tax = subtotal * 0.08
+  // Fixed values for demo (INR)
+  const shipping = subtotal >= 1999 ? 0 : 99
+  const tax = Math.round(subtotal * 0.18) // 18% GST
   const total = subtotal + shipping + tax
 
   if (items.length === 0 && !createOrderMutation.isSuccess) {
@@ -197,7 +198,7 @@ export default function Checkout() {
                       <p className="text-xs text-muted-foreground uppercase mt-1">{item.color} / {item.size}</p>
                       <div className="flex justify-between items-center mt-2 text-xs font-mono">
                         <span>QTY: {item.quantity}</span>
-                        <span>${(item.price * item.quantity).toFixed(2)}</span>
+                        <span>{formatPrice(item.price * item.quantity)}</span>
                       </div>
                     </div>
                   </li>
@@ -207,19 +208,19 @@ export default function Checkout() {
               <div className="space-y-4 border-t border-border pt-6 font-mono text-sm uppercase">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span>${shipping.toFixed(2)}</span>
+                  <span>{shipping === 0 ? "FREE" : formatPrice(shipping)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span className="text-muted-foreground">GST (18%)</span>
+                  <span>{formatPrice(tax)}</span>
                 </div>
                 <div className="flex justify-between border-t border-border pt-4 text-base font-medium">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{formatPrice(total)}</span>
                 </div>
               </div>
             </div>

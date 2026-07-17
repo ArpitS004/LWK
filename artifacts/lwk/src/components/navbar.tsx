@@ -25,19 +25,27 @@ export function Navbar() {
   }, [location])
 
   const navLinks = [
+    { href: "/", label: "Home" },
     { href: "/shop", label: "Shop" },
-    { href: "/collections/latest", label: "Latest Drop" },
-    { href: "/journal", label: "Journal" },
-    { href: "/about", label: "Atelier" },
+    { href: "/collections/lowkey-always", label: "Collections" },
+    { href: "/about", label: "About" },
+    { href: "/lookbook", label: "Lookbook" },
   ]
 
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-40 transition-all duration-500 ease-out border-b border-transparent",
-        isScrolled || mobileMenuOpen ? "bg-background/95 backdrop-blur-md border-border" : "bg-transparent",
+        isScrolled || mobileMenuOpen ? "bg-background/95 backdrop-blur-md border-border" : "bg-background border-border",
       )}
     >
+      <div className="bg-primary text-primary-foreground text-center text-[11px] tracking-widest uppercase py-2 px-4 flex items-center justify-between gap-4">
+        <span className="hidden sm:block w-24 shrink-0" />
+        <span className="flex-1 truncate">Free shipping on all prepaid orders above ₹1999 →</span>
+        <span className="hidden sm:flex items-center gap-1 w-24 justify-end shrink-0 text-primary-foreground/70">
+          INR ₹
+        </span>
+      </div>
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex-1 flex items-center">
           <button 
@@ -64,8 +72,8 @@ export function Navbar() {
         </div>
 
         <div className="flex-1 flex justify-center">
-          <Link href="/" className="text-2xl font-bold tracking-[0.2em] uppercase mix-blend-difference">
-            LWK
+          <Link href="/" className="text-2xl font-extrabold tracking-tight uppercase">
+            LWK<span className="text-accent">*</span>
           </Link>
         </div>
 
@@ -98,7 +106,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div 
         className={cn(
-          "md:hidden fixed inset-0 top-20 bg-background border-t border-border transition-transform duration-300 ease-in-out px-6 py-8 flex flex-col gap-6",
+          "md:hidden fixed inset-0 top-[6.5rem] bg-background border-t border-border transition-transform duration-300 ease-in-out px-6 py-8 flex flex-col gap-6",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

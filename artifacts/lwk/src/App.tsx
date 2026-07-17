@@ -29,7 +29,7 @@ function Router() {
       <Route path="/order-confirmation/:orderNumber" component={OrderConfirmation} />
       <Route path="/wishlist" component={Wishlist} />
       <Route path="/about" component={About} />
-      <Route path="/journal" component={Journal} />
+      <Route path="/lookbook" component={Journal} />
       <Route path="/contact" component={Contact} />
       
       <Route path="/faq"><PolicyPage type="faq" /></Route>

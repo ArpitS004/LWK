@@ -3,6 +3,7 @@ import { useCart } from "@/lib/cart"
 import { Button } from "./ui/button"
 import { Link, useLocation } from "wouter"
 import { cn } from "@/lib/utils"
+import { formatPrice } from "@/lib/format"
 
 export function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQuantity, removeItem, subtotal } = useCart()
@@ -57,7 +58,7 @@ export function CartDrawer() {
                           {item.color} / {item.size}
                         </p>
                       </div>
-                      <p className="font-mono text-sm">${item.price.toFixed(2)}</p>
+                      <p className="font-medium text-sm">{formatPrice(item.price)}</p>
                     </div>
                     
                     <div className="mt-auto flex items-center justify-between">
@@ -92,12 +93,12 @@ export function CartDrawer() {
 
         {items.length > 0 && (
           <div className="border-t border-border p-6 bg-card space-y-4">
-            <div className="flex justify-between font-mono text-sm uppercase tracking-wide">
+            <div className="flex justify-between font-medium text-sm uppercase tracking-wide">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
             <p className="text-muted-foreground text-xs uppercase tracking-widest">
-              Shipping & taxes calculated at checkout.
+              Shipping calculated at checkout. Free on prepaid orders above ₹1999.
             </p>
             <Button 
               className="w-full" 
